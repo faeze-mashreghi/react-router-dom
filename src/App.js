@@ -1,25 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import './App.css'
+import { BrowserRouter, Routes, Route ,useRoutes} from 'react-router-dom';
+import Users from './Component/User'
+import Home from './Component/Home'
+import UsersIndex from './Component/User/Userindex'
+import UserProfile from './Component/User/UserProfile'
+import OwnUserProfile from './Component/User/OwnUserP'
+
+
+
+
+// function App() {
+  
+//   return (<>
+  
+//    {/* <BrowserRouter>
+//        <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="users/*" element={<Users />} />
+//       </Routes> 
+//        </BrowserRouter>
+// ////////////////////////////////////////////////////
+// in one place
+//       <BrowserRouter>
+//  <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="users" element={<Users />}>
+//           <Route path=":id" element={<UserProfile />} />
+//           <Route path="me" element={<OwnUserProfile />} /> 
+//         </Route>
+//       </Routes>
+//     </BrowserRouter> */}
+//       </>
+//   );
+// }
+// export default App;
+
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  let element = useRoutes([
+
+    { path: '/', element: <Home /> },
+    {
+      path: 'users',
+      element: <Users />,
+      children: [
+        // { path: '/', element: <UsersIndex /> },
+        { path: ':id', element: <UserProfile /> },
+        { path: 'me', element: <OwnUserProfile /> },
+      ]
+    }
+  ]);
+
+  return element;
 }
 
-export default App;
+const AppWrapper = () => {
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+};
+export default AppWrapper;
+
+
+
